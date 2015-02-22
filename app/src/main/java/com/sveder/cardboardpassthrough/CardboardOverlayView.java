@@ -2,6 +2,7 @@ package com.sveder.cardboardpassthrough;
 
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -108,8 +109,11 @@ public class CardboardOverlayView extends LinearLayout {
 
         private int centerX, centerY;
 
+        private Bitmap bm;
+
         public CardboardOverlayEyeView(Context context, AttributeSet attrs) {
             super(context, attrs);
+            bm = BitmapFactory.decodeResource(getResources(), R.drawable.mask);
             imageView = new ImageView(context, attrs);
             imageView.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
             imageView.setAdjustViewBounds(true);  // Preserve aspect ratio.
@@ -139,7 +143,7 @@ public class CardboardOverlayView extends LinearLayout {
             this.centerY = centerY;
             Bitmap bitmap = Bitmap.createBitmap(500, 500, Bitmap.Config.ARGB_8888);
             Canvas canvas = new Canvas(bitmap);
-            rectView.setImageBitmap(bitmap);
+            rectView.setImageBitmap(bm);
             Paint paint = new Paint();
             paint.setColor(Color.RED);
             paint.setStyle(Paint.Style.STROKE);
@@ -148,7 +152,8 @@ public class CardboardOverlayView extends LinearLayout {
             float topy = 0;
             float rightx = bitmap.getWidth();
             float bottomy = bitmap.getHeight();
-            canvas.drawRect(leftx, topy, rightx, bottomy, paint);
+            //canvas.drawRect(leftx, topy, rightx, bottomy, paint);
+
         }
 
         public void setText(String text) {
